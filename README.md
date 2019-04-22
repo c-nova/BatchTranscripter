@@ -8,7 +8,7 @@ Batch Transcripter は音声ファイルから「なるべく簡単に」文字�
 
 - Azure Logic Apps を使用し、ほとんどの処理を GUI のみで作成
 - Cognitive Services Speech Service を使うことで、高精度な音声認識を実現 (最先端の MSR の音声認識技術がベース)
-- Speech Service Batch Transcription を使用することで、通常最大10分の音声ファイルしか対応しないところ、無制限（仕様は非公開）の長さの音声ファイルに対応
+- Speech Service Batch Transcription を使用することで、無制限（仕様は非公開）の長さの音声ファイルに対応
 - 通常の音声認識に必要な無音区間検出や短時間での音声ファイルの切り出しは自動で行われるため不要
 
 今回の仕組みでは Blob Storage または OneDrive for Business で仕組みを作成していますが、Logic Apps のトリガーに設定できるものであればどんなストレージでも対応可能です。
@@ -133,7 +133,7 @@ Blob と OneDrive for Business の二つの違いは、
     <img src="img/inst024.png" width=240>
 
     <img src="img/inst025.png" width=480>
-    
+
     <img src="img/inst026.png" width=480>
 
 ## TODO
