@@ -13,7 +13,7 @@ Batch Transcripter は音声ファイルから「なるべく簡単に」文字�
 
 今回の仕組みでは Blob Storage または OneDrive for Business で仕組みを作成していますが、Logic Apps のトリガーに設定できるものであればどんなストレージでも対応可能です。
 
-![FaceUpdateMethod.png](FaceUpdateMethod.png)
+![Differentiation_Speech_Method.png](img/Differentiation_Speech_Method.png)
 
 ## 制限
 
@@ -47,6 +47,7 @@ Blob と OneDrive for Business の二つの違いは、
 ## 使い方（OneDrive for Business 版）
 
 1. Azure Portal から Logic Apps を作成します。
+   
    <img src="img/inst001.png" width=480>
    <img src="img/inst002.png" width=240>
    <img src="img/inst003.png" width=240>
