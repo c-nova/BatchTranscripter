@@ -1,0 +1,872 @@
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Result_フォルダに結果の書き出し": {
+                "inputs": {
+                    "body": "@body('contentsArray_配列の結合')",
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['onedriveforbusiness']['connectionId']"
+                        }
+                    },
+                    "method": "post",
+                    "path": "/datasets/default/files",
+                    "queries": {
+                        "folderPath": "",
+                        "name": "@{concat(variables('audioFileName'), '.txt')}"
+                    }
+                },
+                "runAfter": {
+                    "contentsArray_配列の結合": [
+                        "Succeeded"
+                    ]
+                },
+                "runtimeConfiguration": {
+                    "contentTransfer": {
+                        "transferMode": "Chunked"
+                    }
+                },
+                "type": "ApiConnection"
+            },
+            "audioFileName_変数を初期化する": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "audioFileName",
+                            "type": "String",
+                            "value": "@base64ToString(triggerOutputs()['headers']['x-ms-file-name-encoded'])"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "audioFilePath_変数を初期化する": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "audioFilePath_変数を初期化する": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "audioFilePath",
+                            "type": "String",
+                            "value": "@base64ToString(triggerOutputs()['headers']['x-ms-file-path-encoded'])"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "音声ファイルへの共有リンクの作成": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "contentsArray_配列の結合": {
+                "inputs": {
+                    "from": "@variables('contentsArray')",
+                    "joinWith": "        "
+                },
+                "runAfter": {
+                    "各_JSON_の認識結果を抽出": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Join"
+            },
+            "タスクの処理状況_JSON_を_parse_する": {
+                "inputs": {
+                    "content": "@body('音声認識タスクの処理状況をタスク_ID_で_GET_する')",
+                    "schema": {
+                        "properties": {
+                            "createdDateTime": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "id": {
+                                "type": "string"
+                            },
+                            "lastActionDateTime": {
+                                "type": "string"
+                            },
+                            "locale": {
+                                "type": "string"
+                            },
+                            "models": {
+                                "items": {
+                                    "properties": {
+                                        "createdDateTime": {
+                                            "type": "string"
+                                        },
+                                        "datasets": {
+                                            "type": "array"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        },
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "lastActionDateTime": {
+                                            "type": "string"
+                                        },
+                                        "locale": {
+                                            "type": "string"
+                                        },
+                                        "modelKind": {
+                                            "type": "string"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "properties": {
+                                            "properties": {
+                                                "ModelClass": {
+                                                    "type": "string"
+                                                },
+                                                "Purpose": {
+                                                    "type": "string"
+                                                },
+                                                "VadKind": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "modelKind",
+                                        "datasets",
+                                        "id",
+                                        "createdDateTime",
+                                        "lastActionDateTime",
+                                        "status",
+                                        "locale",
+                                        "name",
+                                        "description",
+                                        "properties"
+                                    ],
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "properties": {
+                                "properties": {
+                                    "Duration": {
+                                        "type": "string"
+                                    },
+                                    "ProfanityFilterMode": {
+                                        "type": "string"
+                                    },
+                                    "PunctuationMode": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "recordingsUrl": {
+                                "type": "string"
+                            },
+                            "resultsUrls": {
+                                "properties": {
+                                    "channel_0": {
+                                        "type": "string"
+                                    },
+                                    "channel_1": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "status": {
+                                "type": "string"
+                            },
+                            "statusMessage": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "runAfter": {
+                    "音声認識タスクの処理状況をタスク_ID_で_GET_する": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ParseJson"
+            },
+            "タスクリストの各要素からファイル名をキーにタスク_ID_を抽出する": {
+                "actions": {
+                    "resordingsUrl_要素に_audioFileName_が含まれているか確認する": {
+                        "actions": {
+                            "transcriptID_変数に検出したタスク_ID_を格納する": {
+                                "inputs": {
+                                    "name": "transcriptID",
+                                    "value": "@body('transcriptJsonArray_の各要素を_parse_する')?['id']"
+                                },
+                                "runAfter": {},
+                                "type": "SetVariable"
+                            }
+                        },
+                        "expression": {
+                            "and": [
+                                {
+                                    "contains": [
+                                        "@body('transcriptJsonArray_の各要素を_parse_する')?['recordingsUrl']",
+                                        "@body('音声ファイルへの共有リンクの作成')?['WebUrl']"
+                                    ]
+                                }
+                            ]
+                        },
+                        "runAfter": {
+                            "transcriptJsonArray_の各要素を_parse_する": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "If"
+                    },
+                    "transcriptJsonArray_の各要素を_parse_する": {
+                        "inputs": {
+                            "content": "@items('タスクリストの各要素からファイル名をキーにタスク_ID_を抽出する')",
+                            "schema": {
+                                "properties": {
+                                    "createdDateTime": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "lastActionDateTime": {
+                                        "type": "string"
+                                    },
+                                    "locale": {
+                                        "type": "string"
+                                    },
+                                    "models": {
+                                        "items": {
+                                            "properties": {
+                                                "createdDateTime": {
+                                                    "type": "string"
+                                                },
+                                                "datasets": {
+                                                    "type": "array"
+                                                },
+                                                "description": {
+                                                    "type": "string"
+                                                },
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "lastActionDateTime": {
+                                                    "type": "string"
+                                                },
+                                                "locale": {
+                                                    "type": "string"
+                                                },
+                                                "modelKind": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "properties": {
+                                                    "properties": {
+                                                        "ModelClass": {
+                                                            "type": "string"
+                                                        },
+                                                        "Purpose": {
+                                                            "type": "string"
+                                                        },
+                                                        "VadKind": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "modelKind",
+                                                "datasets",
+                                                "id",
+                                                "createdDateTime",
+                                                "lastActionDateTime",
+                                                "status",
+                                                "locale",
+                                                "name",
+                                                "description",
+                                                "properties"
+                                            ],
+                                            "type": "object"
+                                        },
+                                        "type": "array"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "properties": {
+                                        "properties": {
+                                            "Duration": {
+                                                "type": "string"
+                                            },
+                                            "ProfanityFilterMode": {
+                                                "type": "string"
+                                            },
+                                            "PunctuationMode": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "recordingsUrl": {
+                                        "type": "string"
+                                    },
+                                    "resultsUrls": {
+                                        "properties": {
+                                            "channel_0": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "statusMessage": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "runAfter": {},
+                        "type": "ParseJson"
+                    }
+                },
+                "foreach": "@variables('transcriptJsonArray')",
+                "runAfter": {
+                    "一意のタスク_ID_用に_transcriptID_変数を初期化する": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Foreach"
+            },
+            "タスクリストを配列として_transcriptJsonArray_変数に初期化する": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "transcriptJsonArray",
+                            "type": "Array",
+                            "value": "@body('バッチ音声認識タスクのリストを_GET_する')"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "バッチ音声認識タスクのリストを_GET_する": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "バッチ音声認識タスクのリストを_GET_する": {
+                "inputs": {
+                    "headers": {
+                        "Ocp-Apim-Subscription-Key": "<Please set to Speech Service Subscription Key>"
+                    },
+                    "method": "GET",
+                    "uri": "https://japaneast.cris.ai/api/speechtotext/v2.0/transcriptions/"
+                },
+                "runAfter": {
+                    "バッチ音声認識要求を_POST_する": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Http"
+            },
+            "バッチ音声認識用_JSON_の作成": {
+                "inputs": {
+                    "description": "An optional description of the transcription.",
+                    "locale": "ja-JP",
+                    "models": [],
+                    "name": "Transcription using locale ja-JP",
+                    "properties": {
+                        "ProfanityFilterMode": "Masked",
+                        "PunctuationMode": "DictatedAndAutomatic"
+                    },
+                    "recordingsUrl": "@{body('音声ファイルへの共有リンクの作成')?['WebUrl']}"
+                },
+                "runAfter": {
+                    "audioFileName_変数を初期化する": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Compose"
+            },
+            "バッチ音声認識要求を_POST_する": {
+                "inputs": {
+                    "body": "@outputs('バッチ音声認識用_JSON_の作成')",
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "Ocp-Apim-Subscription-Key": "<Please set to Speech Service Subscription Key>"
+                    },
+                    "method": "POST",
+                    "uri": "https://japaneast.cris.ai/api/speechtotext/v2.0/Transcriptions"
+                },
+                "runAfter": {
+                    "バッチ音声認識用_JSON_の作成": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Http"
+            },
+            "ファイルの削除": {
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['onedriveforbusiness']['connectionId']"
+                        }
+                    },
+                    "method": "delete",
+                    "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent(triggerOutputs()['headers']['x-ms-file-id']))}"
+                },
+                "runAfter": {
+                    "音声認識タスクリストから該当するタスク_ID_を削除": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnection"
+            },
+            "一意のタスク_ID_用に_transcriptID_変数を初期化する": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "transcriptID",
+                            "type": "String"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "タスクリストを配列として_transcriptJsonArray_変数に初期化する": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "各_JSON_の認識結果を抽出": {
+                "actions": {
+                    "認識結果リストの抽出": {
+                        "actions": {
+                            "最適な結果の抽出": {
+                                "actions": {
+                                    "最適な結果を_contentsArray_変数に追加": {
+                                        "inputs": {
+                                            "name": "contentsArray",
+                                            "value": "@items('最適な結果の抽出')['Display']"
+                                        },
+                                        "runAfter": {},
+                                        "type": "AppendToArrayVariable"
+                                    }
+                                },
+                                "foreach": "@items('認識結果リストの抽出')['NBest']",
+                                "runAfter": {},
+                                "type": "Foreach"
+                            }
+                        },
+                        "foreach": "@items('各_JSON_の認識結果を抽出')['SegmentResults']",
+                        "runAfter": {},
+                        "type": "Foreach"
+                    }
+                },
+                "foreach": "@body('認識結果_JSON_を_parse_する')?['AudioFileResults']",
+                "runAfter": {
+                    "複数行の認識結果を格納するための_contentsArray_変数を初期化する": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Foreach"
+            },
+            "複数行の認識結果を格納するための_contentsArray_変数を初期化する": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "contentsArray",
+                            "type": "Array",
+                            "value": "@array(concat('Cognitive Services Speech Service を利用して', variables('audioFileName'), 'の音声を文字に変換します。'))"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "認識結果_JSON_を_parse_する": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "認識結果_JSON_を_parse_する": {
+                "inputs": {
+                    "content": "@json(body('音声認識の結果ファイルを_GET_する'))",
+                    "schema": {
+                        "properties": {
+                            "AudioFileResults": {
+                                "items": {
+                                    "properties": {
+                                        "AudioFileName": {
+                                            "type": "string"
+                                        },
+                                        "AudioFileUrl": {},
+                                        "SegmentResults": {
+                                            "items": {
+                                                "properties": {
+                                                    "ChannelNumber": {},
+                                                    "Duration": {
+                                                        "type": "integer"
+                                                    },
+                                                    "NBest": {
+                                                        "items": {
+                                                            "properties": {
+                                                                "Confidence": {
+                                                                    "type": "number"
+                                                                },
+                                                                "Display": {
+                                                                    "type": "string"
+                                                                },
+                                                                "ITN": {
+                                                                    "type": "string"
+                                                                },
+                                                                "Lexical": {
+                                                                    "type": "string"
+                                                                },
+                                                                "MaskedITN": {
+                                                                    "type": "string"
+                                                                },
+                                                                "Words": {}
+                                                            },
+                                                            "required": [
+                                                                "Confidence",
+                                                                "Lexical",
+                                                                "ITN",
+                                                                "MaskedITN",
+                                                                "Display",
+                                                                "Words"
+                                                            ],
+                                                            "type": "object"
+                                                        },
+                                                        "type": "array"
+                                                    },
+                                                    "Offset": {
+                                                        "type": "integer"
+                                                    },
+                                                    "RecognitionStatus": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "RecognitionStatus",
+                                                    "ChannelNumber",
+                                                    "Offset",
+                                                    "Duration",
+                                                    "NBest"
+                                                ],
+                                                "type": "object"
+                                            },
+                                            "type": "array"
+                                        }
+                                    },
+                                    "required": [
+                                        "AudioFileName",
+                                        "AudioFileUrl",
+                                        "SegmentResults"
+                                    ],
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "runAfter": {
+                    "音声認識の結果ファイルを_GET_する": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ParseJson"
+            },
+            "認識結果ファイルのURLが生成されるまでループ処理を実施": {
+                "actions": {
+                    "30秒待機": {
+                        "inputs": {
+                            "interval": {
+                                "count": 30,
+                                "unit": "Second"
+                            }
+                        },
+                        "runAfter": {},
+                        "type": "Wait"
+                    },
+                    "resultUrl_変数に_channel_0_の値を設定する": {
+                        "inputs": {
+                            "name": "resultUrl",
+                            "value": "@body('タスクの処理状況_JSON_を_parse_する（ループ内）')?['resultsUrls']?['channel_0']"
+                        },
+                        "runAfter": {
+                            "タスクの処理状況_JSON_を_parse_する（ループ内）": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "SetVariable"
+                    },
+                    "タスクの処理状況_JSON_を_parse_する（ループ内）": {
+                        "inputs": {
+                            "content": "@body('音声認識タスクの処理状況をタスク_ID_で_GET_する（ループ内）')",
+                            "schema": {
+                                "properties": {
+                                    "createdDateTime": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "lastActionDateTime": {
+                                        "type": "string"
+                                    },
+                                    "locale": {
+                                        "type": "string"
+                                    },
+                                    "models": {
+                                        "items": {
+                                            "properties": {
+                                                "createdDateTime": {
+                                                    "type": "string"
+                                                },
+                                                "datasets": {
+                                                    "type": "array"
+                                                },
+                                                "description": {
+                                                    "type": "string"
+                                                },
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "lastActionDateTime": {
+                                                    "type": "string"
+                                                },
+                                                "locale": {
+                                                    "type": "string"
+                                                },
+                                                "modelKind": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "properties": {
+                                                    "properties": {
+                                                        "ModelClass": {
+                                                            "type": "string"
+                                                        },
+                                                        "Purpose": {
+                                                            "type": "string"
+                                                        },
+                                                        "VadKind": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "modelKind",
+                                                "datasets",
+                                                "id",
+                                                "createdDateTime",
+                                                "lastActionDateTime",
+                                                "status",
+                                                "locale",
+                                                "name",
+                                                "description",
+                                                "properties"
+                                            ],
+                                            "type": "object"
+                                        },
+                                        "type": "array"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "properties": {
+                                        "properties": {
+                                            "Duration": {
+                                                "type": "string"
+                                            },
+                                            "ProfanityFilterMode": {
+                                                "type": "string"
+                                            },
+                                            "PunctuationMode": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "recordingsUrl": {
+                                        "type": "string"
+                                    },
+                                    "resultsUrls": {
+                                        "properties": {
+                                            "channel_0": {
+                                                "type": "string"
+                                            },
+                                            "channel_1": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "statusMessage": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "runAfter": {
+                            "音声認識タスクの処理状況をタスク_ID_で_GET_する（ループ内）": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "ParseJson"
+                    },
+                    "音声認識タスクの処理状況をタスク_ID_で_GET_する（ループ内）": {
+                        "inputs": {
+                            "headers": {
+                                "Ocp-Apim-Subscription-Key": "<Please set to Speech Service Subscription Key>"
+                            },
+                            "method": "GET",
+                            "uri": "https://japaneast.cris.ai/api/speechtotext/v2.0/transcriptions/@{variables('transcriptID')}"
+                        },
+                        "runAfter": {
+                            "30秒待機": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "Http"
+                    }
+                },
+                "expression": "@contains(variables('resultUrl'), 'http')",
+                "limit": {
+                    "count": 60,
+                    "timeout": "PT1H"
+                },
+                "runAfter": {
+                    "認識結果ファイルの_URL_を格納する_resultUrl_変数を初期化する": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Until"
+            },
+            "認識結果ファイルの_URL_を格納する_resultUrl_変数を初期化する": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "resultUrl",
+                            "type": "String"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "タスクの処理状況_JSON_を_parse_する": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "音声ファイルへの共有リンクの作成": {
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['onedriveforbusiness']['connectionId']"
+                        }
+                    },
+                    "method": "post",
+                    "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent(triggerOutputs()['headers']['x-ms-file-id']))}/share",
+                    "queries": {
+                        "scope": "Anonymous",
+                        "type": "Direct"
+                    }
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+            },
+            "音声認識の結果ファイルを_GET_する": {
+                "inputs": {
+                    "method": "GET",
+                    "uri": "@variables('resultUrl')"
+                },
+                "runAfter": {
+                    "認識結果ファイルのURLが生成されるまでループ処理を実施": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Http"
+            },
+            "音声認識タスクの処理状況をタスク_ID_で_GET_する": {
+                "inputs": {
+                    "headers": {
+                        "Ocp-Apim-Subscription-Key": "<Please set to Speech Service Subscription Key>"
+                    },
+                    "method": "GET",
+                    "uri": "https://japaneast.cris.ai/api/speechtotext/v2.0/transcriptions/@{variables('transcriptID')}"
+                },
+                "runAfter": {
+                    "タスクリストの各要素からファイル名をキーにタスク_ID_を抽出する": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Http"
+            },
+            "音声認識タスクリストから該当するタスク_ID_を削除": {
+                "inputs": {
+                    "headers": {
+                        "Ocp-Apim-Subscription-Key": "<Please set to Speech Service Subscription Key>"
+                    },
+                    "method": "DELETE",
+                    "uri": "@{concat('https://japaneast.cris.ai/api/speechtotext/v2.0/transcriptions/', variables('transcriptID'))}"
+                },
+                "runAfter": {
+                    "Result_フォルダに結果の書き出し": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Http"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            }
+        },
