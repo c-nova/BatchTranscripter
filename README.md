@@ -50,7 +50,6 @@ Blob と OneDrive for Business の二つの違いは、
 - [Azure Storage BLOB 版](usageBlob.md)
 
 ## TODO
-- BLOB 編の手順作成 (Soon!)
 - 途中失敗時の認識タスクIDの削除（どこで？）
 - 開始時間のコントロールができないとしても、Estimate はできないのか？？
 
