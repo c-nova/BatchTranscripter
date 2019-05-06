@@ -205,7 +205,7 @@
             },
             "タスクリストの各要素からファイル名をキーにタスク_ID_を抽出する": {
                 "actions": {
-                    "resordingsUrl_要素に_audioFileName_が含まれているか確認する": {
+                    "recordingsUrl_要素に_audioFileName_が含まれているか確認する": {
                         "actions": {
                             "transcriptID_変数に検出したタスク_ID_を格納する": {
                                 "inputs": {
