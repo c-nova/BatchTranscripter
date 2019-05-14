@@ -17,6 +17,8 @@ Batch Transcripter は**音声ファイルから「なるべく簡単に」文�
 
 ## 制限
 
+- バッチ文字起こし機能はフリーのサブスクリプションでは[利用できません](https://docs.microsoft.com/ja-jp/azure/cognitive-services/speech-service/batch-transcription#subscription-key)。必ず S0 または有償のサブスクリプションをご利用ください。
+- バッチ文字起こし機能はフリーのサブスクリプションでは[利用できません](。必ず S0 または有償のサブスクリプションをご利用ください。
 - 音声ファイルは WAV、MP3、OGG の3種類のみ対応（Apple AAC には非対応ですので、iOS を利用する際にはご注意ください）
 - ビットレートは 16bit 、サンプルレートは 8 または 16 KHz 、モノラルまたはステレオに対応（ステレオ音源の場合には channel 0 及び 1 にそれぞれ認識結果が格納されます）
 - 現在のバッチ文字起こしの「開始時間」はベストエフォートで設定されます。従って非常に短時間のファイルであっても、10分経過しないと文字起こしが開始しない可能性があります（開始後は通常の文字起こしよりも高速に処理されます）
@@ -47,7 +49,8 @@ Blob と OneDrive for Business の二つの違いは、
 ## 使い方
 
 - [OneDrive for Business 版](usageODB.md)
-- [Azure Storage BLOB 版](usageBlob.md)
+- [Azure Storage BLOB Event Hub Trigger 版](usageBlobEH.md)
+- Blob Trigger を利用する場合には、上記 Event Hub Trigger 版手順の途中より分岐してください
 
 ## TODO
 - 途中失敗時の認識タスクIDの削除（どこで？）

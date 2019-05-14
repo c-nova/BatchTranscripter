@@ -7,15 +7,28 @@
                     {
                         "name": "audioFileName",
                         "type": "String",
-                        "value": "@{triggerBody()?['Name']}"
+                        "value": "@{split(uriPath(triggerBody()?['data'].url), '/')[2]}"
                     }
                 ]
             },
             "runAfter": {
-                "speechSubKey_変数を初期化する": [
+                "audioFilePath_変数を初期化する": [
                     "Succeeded"
                 ]
             },
+            "type": "InitializeVariable"
+        },
+        "audioFilePath_変数を初期化する": {
+            "inputs": {
+                "variables": [
+                    {
+                        "name": "audioFilePath",
+                        "type": "String",
+                        "value": "@{split(uriPath(triggerBody()?['data'].url), '/')[1]}"
+                    }
+                ]
+            },
+            "runAfter": {},
             "type": "InitializeVariable"
         },
         "contentsArray_配列の結合": {
@@ -29,19 +42,6 @@
                 ]
             },
             "type": "Join"
-        },
-        "speechSubKey_変数を初期化する": {
-            "inputs": {
-                "variables": [
-                    {
-                        "name": "speechSubKey",
-                        "type": "String",
-                        "value": ""
-                    }
-                ]
-            },
-            "runAfter": {},
-            "type": "InitializeVariable"
         },
         "タスクの処理状況_JSON_を_parse_する": {
             "inputs": {
@@ -354,7 +354,7 @@
             "inputs": {
                 "headers": {
                     "Content-Type": "application/json",
-                    "Ocp-Apim-Subscription-Key": "@variables('speechSubKey')"
+                    "Ocp-Apim-Subscription-Key": "<Please set to Speech Service Subscription Key>"
                 },
                 "method": "GET",
                 "uri": "https://japaneast.cris.ai/api/speechtotext/v2.0/transcriptions/"
@@ -390,7 +390,7 @@
                 "body": "@outputs('バッチ音声認識用_JSON_の作成')",
                 "headers": {
                     "Content-Type": "application/json",
-                    "Ocp-Apim-Subscription-Key": "@variables('speechSubKey')"
+                    "Ocp-Apim-Subscription-Key": "<Please set to Speech Service Subscription Key>"
                 },
                 "method": "POST",
                 "uri": "https://japaneast.cris.ai/api/speechtotext/v2.0/Transcriptions"
@@ -410,7 +410,7 @@
                     }
                 },
                 "method": "delete",
-                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent(triggerBody()?['Path']))}"
+                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent(uriPath(triggerBody()?['data'].url)))}"
             },
             "runAfter": {
                 "音声認識タスクリストから該当するタスク_ID_を削除": [
@@ -760,7 +760,7 @@
                     "inputs": {
                         "headers": {
                             "Content-Type": "application/json",
-                            "Ocp-Apim-Subscription-Key": "@variables('speechSubKey')"
+                            "Ocp-Apim-Subscription-Key": "<Please set to Speech Service Subscription Key>"
                         },
                         "method": "GET",
                         "uri": "https://japaneast.cris.ai/api/speechtotext/v2.0/transcriptions/@{variables('transcriptID')}"
@@ -817,7 +817,7 @@
             "inputs": {
                 "headers": {
                     "Content-Type": "application/json",
-                    "Ocp-Apim-Subscription-Key": "@variables('speechSubKey')"
+                    "Ocp-Apim-Subscription-Key": "<Please set to Speech Service Subscription Key>"
                 },
                 "method": "GET",
                 "uri": "https://japaneast.cris.ai/api/speechtotext/v2.0/transcriptions/@{variables('transcriptID')}"
@@ -833,7 +833,7 @@
             "inputs": {
                 "headers": {
                     "Content-Type": "application/json",
-                    "Ocp-Apim-Subscription-Key": "@variables('speechSubKey')"
+                    "Ocp-Apim-Subscription-Key": "<Please set to Speech Service Subscription Key>"
                 },
                 "method": "DELETE",
                 "uri": "@{concat('https://japaneast.cris.ai/api/speechtotext/v2.0/transcriptions/', variables('transcriptID'))}"
