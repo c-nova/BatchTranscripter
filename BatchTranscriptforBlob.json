@@ -376,7 +376,7 @@
                     "ProfanityFilterMode": "Masked",
                     "PunctuationMode": "DictatedAndAutomatic"
                 },
-                "recordingsUrl": "https://<Blob Host Name>.blob.core.windows.net@{uriPath(triggerBody()?['data'].url)}?<Blob SAS Parameters>"
+                "recordingsUrl": "https://<Blob Host Name>.blob.core.windows.net@{triggerBody()?['Path']}?<Blob SAS Parameters>"
             },
             "runAfter": {
                 "audioFileName_変数を初期化する": [

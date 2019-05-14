@@ -14,7 +14,7 @@
 5. 「保存」をクリックし、一旦内容を保存した後、「コードビュー」をクリックします。
    <br><img src="img/inst204.png" width=480>
 
-6.  開いたコードの `definition` のサブアイテム `$schema`から `parameters` まで(triggersの直前まで)の内容を選択し、[BatchTranscriptforBlob.json](BatchTranscriptforBlob.json) のファイルの内容で全て上書きコピーします（triggers は消さないように注意してください）。コピー完了後、先ほど保存した接続情報を ` $connections` のサブアイテムの `values` に追加します。
+6.  開いたコードの `definition` のサブアイテム `$schema`から `parameters` まで(triggersの直前まで)の内容を選択し、[BatchTranscriptforBlob.json](BatchTranscriptforBlob.json) のファイルの内容で全て上書きコピーします（triggers は消さないように注意してください）。
 
    <br><img src="img/inst205.png" width=480>
 
@@ -24,7 +24,7 @@
 8.  次に「speechSubKey 変数を初期化する」を開き、「値」の欄に Speech Services のサブスクリプション キーを入力します（サービス未作成の場合は別途作成してください）。このシステムでは REST の呼び出し先が「japaneast（東日本）」となっていますので、東日本でサービスを作成するか、Speech Services を呼び出す箇所のURLの変更を行ってください。
    <br><img src="img/inst207.png" width=480>
 
-9.  次に「バッチ音声認識用 JSON の作成」を開き、「recordingUrl」のプロパティの変更を行います。"https://<Blob Host Name>.blob.core.windows.net@{uriPath(triggerBody()?['data'].url)}?<Blob SAS Parameters>" と なっている箇所を、例えば blobstore という名前のストレージアカウントで作成した場合には「blobstore.blob.core.windows.net」と、「?」以降の部分は先ほど保存したURLの「?」以降の部分で置き換えます。
+9.  次に「バッチ音声認識用 JSON の作成」を開き、「recordingUrl」のプロパティの変更を行います。"https://<Blob Host Name>.blob.core.windows.net@{uriPath(triggerBody()?['data'].url)}?<Blob SAS Parameters>" と なっている箇所を、例えば blobstore という名前のストレージアカウントで作成した場合には「blobstore.blob.core.windows.net」と、「?」以降の部分はAzure Storage BLOB Event Hub Trigger 版の8で保存したSASキーURLの「?」以降の部分で置き換えます。
     <br><img src="img/inst208.png" width=480>
 
 10. 結果のテキストファイルを配置する BLOB のフォルダを指定します。
