@@ -18,7 +18,6 @@ Batch Transcripter は**音声ファイルから「なるべく簡単に」文�
 ## 制限
 
 - バッチ文字起こし機能はフリーのサブスクリプションでは[利用できません](https://docs.microsoft.com/ja-jp/azure/cognitive-services/speech-service/batch-transcription#subscription-key)。必ず S0 または有償のサブスクリプションをご利用ください。
-- バッチ文字起こし機能はフリーのサブスクリプションでは[利用できません](。必ず S0 または有償のサブスクリプションをご利用ください。
 - 音声ファイルは WAV、MP3、OGG の3種類のみ対応（Apple AAC には非対応ですので、iOS を利用する際にはご注意ください）
 - ビットレートは 16bit 、サンプルレートは 8 または 16 KHz 、モノラルまたはステレオに対応（ステレオ音源の場合には channel 0 及び 1 にそれぞれ認識結果が格納されます）
 - 現在のバッチ文字起こしの「開始時間」はベストエフォートで設定されます。従って非常に短時間のファイルであっても、10分経過しないと文字起こしが開始しない可能性があります（開始後は通常の文字起こしよりも高速に処理されます）
@@ -59,3 +58,6 @@ Blob と OneDrive for Business の二つの違いは、
 ## Notice
 本プログラムは無保証です。ご利用者の責任の範囲でご利用ください。本プログラムを使用したいかなる損害につきましても補償致しません。
 ライセンスはMITライセンスに準拠します。
+
+## Acknowledgements
+本プログラムを作成するにあたって Abhishek 氏の記事[「Logic Apps — Large Audio -Speech to Text Batch Transcription」](https://medium.com/@abhishekcskumar/logic-apps-large-audio-speech-to-text-batch-transcription-d71e93bbaeec)が非常に参考になりました。もしご興味あればご一読ください。
