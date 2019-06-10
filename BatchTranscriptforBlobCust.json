@@ -21,11 +21,13 @@
         "contentsArray_配列の結合": {
             "inputs": {
                 "from": "@variables('contentsArray')",
-                "joinWith": "@{uriComponentToString('%0A')}"
+                "joinWith": ";"
             },
             "runAfter": {
                 "各_JSON_の認識結果を抽出": [
-                    "Succeeded"
+                    "Succeeded",
+                    "Failed",
+                    "Skipped"
                 ]
             },
             "type": "Join"
@@ -36,7 +38,7 @@
                     {
                         "name": "speechSubKey",
                         "type": "String",
-                        "value": ""
+                        "value": "ab76ea51b3ff46bd96c8d83846dc3670"
                     }
                 ]
             },
@@ -66,10 +68,107 @@
                         "models": {
                             "items": {
                                 "properties": {
+                                    "baseModel": {
+                                        "properties": {
+                                            "createdDateTime": {
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "type": "string"
+                                            },
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "lastActionDateTime": {
+                                                "type": "string"
+                                            },
+                                            "locale": {
+                                                "type": "string"
+                                            },
+                                            "modelKind": {
+                                                "type": "string"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "properties": {
+                                                "properties": {
+                                                    "Purpose": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "status": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
                                     "createdDateTime": {
                                         "type": "string"
                                     },
                                     "datasets": {
+                                        "items": {
+                                            "properties": {
+                                                "createdDateTime": {
+                                                    "type": "string"
+                                                },
+                                                "dataImportKind": {
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string"
+                                                },
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "lastActionDateTime": {
+                                                    "type": "string"
+                                                },
+                                                "locale": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "properties": {
+                                                    "properties": {
+                                                        "AcceptedLines": {
+                                                            "type": "string"
+                                                        },
+                                                        "LanguageDataUrl": {
+                                                            "type": "string"
+                                                        },
+                                                        "PortalAPIVersion": {
+                                                            "type": "string"
+                                                        },
+                                                        "RejectedLines": {
+                                                            "type": "string"
+                                                        },
+                                                        "ReportUri": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "dataImportKind",
+                                                "id",
+                                                "createdDateTime",
+                                                "lastActionDateTime",
+                                                "status",
+                                                "locale",
+                                                "name",
+                                                "description",
+                                                "properties"
+                                            ],
+                                            "type": "object"
+                                        },
                                         "type": "array"
                                     },
                                     "description": {
@@ -92,13 +191,7 @@
                                     },
                                     "properties": {
                                         "properties": {
-                                            "ModelClass": {
-                                                "type": "string"
-                                            },
                                             "Purpose": {
-                                                "type": "string"
-                                            },
-                                            "VadKind": {
                                                 "type": "string"
                                             }
                                         },
@@ -117,8 +210,7 @@
                                     "status",
                                     "locale",
                                     "name",
-                                    "description",
-                                    "properties"
+                                    "description"
                                 ],
                                 "type": "object"
                             },
@@ -129,7 +221,7 @@
                         },
                         "properties": {
                             "properties": {
-                                "Duration": {
+                                "AddWordLevelTimestamps": {
                                     "type": "string"
                                 },
                                 "ProfanityFilterMode": {
@@ -145,14 +237,7 @@
                             "type": "string"
                         },
                         "resultsUrls": {
-                            "properties": {
-                                "channel_0": {
-                                    "type": "string"
-                                },
-                                "channel_1": {
-                                    "type": "string"
-                                }
-                            },
+                            "properties": {},
                             "type": "object"
                         },
                         "status": {
@@ -225,10 +310,107 @@
                                 "models": {
                                     "items": {
                                         "properties": {
+                                            "baseModel": {
+                                                "properties": {
+                                                    "createdDateTime": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    },
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "lastActionDateTime": {
+                                                        "type": "string"
+                                                    },
+                                                    "locale": {
+                                                        "type": "string"
+                                                    },
+                                                    "modelKind": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "properties": {
+                                                        "properties": {
+                                                            "Purpose": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "status": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
                                             "createdDateTime": {
                                                 "type": "string"
                                             },
                                             "datasets": {
+                                                "items": {
+                                                    "properties": {
+                                                        "createdDateTime": {
+                                                            "type": "string"
+                                                        },
+                                                        "dataImportKind": {
+                                                            "type": "string"
+                                                        },
+                                                        "description": {
+                                                            "type": "string"
+                                                        },
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "lastActionDateTime": {
+                                                            "type": "string"
+                                                        },
+                                                        "locale": {
+                                                            "type": "string"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "properties": {
+                                                            "properties": {
+                                                                "AcceptedLines": {
+                                                                    "type": "string"
+                                                                },
+                                                                "LanguageDataUrl": {
+                                                                    "type": "string"
+                                                                },
+                                                                "PortalAPIVersion": {
+                                                                    "type": "string"
+                                                                },
+                                                                "RejectedLines": {
+                                                                    "type": "string"
+                                                                },
+                                                                "ReportUri": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "status": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "dataImportKind",
+                                                        "id",
+                                                        "createdDateTime",
+                                                        "lastActionDateTime",
+                                                        "status",
+                                                        "locale",
+                                                        "name",
+                                                        "description",
+                                                        "properties"
+                                                    ],
+                                                    "type": "object"
+                                                },
                                                 "type": "array"
                                             },
                                             "description": {
@@ -251,13 +433,7 @@
                                             },
                                             "properties": {
                                                 "properties": {
-                                                    "ModelClass": {
-                                                        "type": "string"
-                                                    },
                                                     "Purpose": {
-                                                        "type": "string"
-                                                    },
-                                                    "VadKind": {
                                                         "type": "string"
                                                     }
                                                 },
@@ -276,8 +452,7 @@
                                             "status",
                                             "locale",
                                             "name",
-                                            "description",
-                                            "properties"
+                                            "description"
                                         ],
                                         "type": "object"
                                     },
@@ -288,7 +463,7 @@
                                 },
                                 "properties": {
                                     "properties": {
-                                        "Duration": {
+                                        "AddWordLevelTimestamps": {
                                             "type": "string"
                                         },
                                         "ProfanityFilterMode": {
@@ -304,11 +479,7 @@
                                     "type": "string"
                                 },
                                 "resultsUrls": {
-                                    "properties": {
-                                        "channel_0": {
-                                            "type": "string"
-                                        }
-                                    },
+                                    "properties": {},
                                     "type": "object"
                                 },
                                 "status": {
@@ -370,7 +541,11 @@
             "inputs": {
                 "description": "An optional description of the transcription.",
                 "locale": "ja-JP",
-                "models": [],
+                "models": [
+                    {
+                        "Id": "<Custom Language Model ID>"
+                    }
+                ],
                 "name": "Transcription using locale ja-JP",
                 "properties": {
                     "ProfanityFilterMode": "Masked",
@@ -395,6 +570,7 @@
                 "method": "POST",
                 "uri": "https://japaneast.cris.ai/api/speechtotext/v2.0/Transcriptions"
             },
+            "operationOptions": "DisableAsyncPattern",
             "runAfter": {
                 "バッチ音声認識用_JSON_の作成": [
                     "Succeeded"
@@ -414,7 +590,10 @@
             },
             "runAfter": {
                 "音声認識タスクリストから該当するタスク_ID_を削除": [
-                    "Succeeded"
+                    "Succeeded",
+                    "Failed",
+                    "Skipped",
+                    "TimedOut"
                 ]
             },
             "type": "ApiConnection"
@@ -435,36 +614,144 @@
             },
             "type": "InitializeVariable"
         },
-        "各_JSON_の認識結果を抽出": {
-            "actions": {
-                "認識結果リストの抽出": {
-                    "actions": {
-                        "最適な結果の抽出": {
-                            "actions": {
-                                "最適な結果を_contentsArray_変数に追加": {
-                                    "inputs": {
-                                        "name": "contentsArray",
-                                        "value": "@items('最適な結果の抽出')?['Display']"
-                                    },
-                                    "runAfter": {},
-                                    "type": "AppendToArrayVariable"
-                                }
-                            },
-                            "foreach": "@items('認識結果リストの抽出')?['NBest']",
-                            "runAfter": {},
-                            "type": "Foreach"
-                        }
-                    },
-                    "foreach": "@items('各_JSON_の認識結果を抽出')?['SegmentResults']",
-                    "runAfter": {},
-                    "type": "Foreach"
-                }
+        "一時認識結果を格納するための_lexicalPhraseArray_変数を初期化する": {
+            "inputs": {
+                "variables": [
+                    {
+                        "name": "lexicalPhraseArray",
+                        "type": "Array"
+                    }
+                ]
             },
-            "foreach": "@body('認識結果_JSON_を_parse_する')?['AudioFileResults']",
             "runAfter": {
                 "複数行の認識結果を格納するための_contentsArray_変数を初期化する": [
                     "Succeeded"
                 ]
+            },
+            "type": "InitializeVariable"
+        },
+        "一時認識結果を格納するための_lexicalWord_変数を初期化する": {
+            "inputs": {
+                "variables": [
+                    {
+                        "name": "lexicalWord",
+                        "type": "String"
+                    }
+                ]
+            },
+            "runAfter": {
+                "一時認識結果を格納するための_lexicalPhraseArray_変数を初期化する": [
+                    "Succeeded"
+                ]
+            },
+            "type": "InitializeVariable"
+        },
+        "各_JSON_の認識結果を抽出": {
+            "actions": {
+                "認識結果リストの抽出": {
+                    "actions": {
+                        "最終結果リストの抽出": {
+                            "actions": {
+                                "nBest_の_lexical_を_lexicalPhraseArray_変数に設定": {
+                                    "inputs": {
+                                        "name": "lexicalPhraseArray",
+                                        "value": "@array(split(string(items('最終結果リストの抽出')['lexical']), ' '))"
+                                    },
+                                    "runAfter": {},
+                                    "type": "SetVariable"
+                                },
+                                "改行を追加": {
+                                    "inputs": {
+                                        "name": "contentsArray",
+                                        "value": "@uriComponentToString('%0A')"
+                                    },
+                                    "runAfter": {
+                                        "最終結果フレーズからワードを抽出する": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "AppendToArrayVariable"
+                                },
+                                "最終結果フレーズからワードを抽出する": {
+                                    "actions": {
+                                        "前ステップ失敗時の配列への設定": {
+                                            "inputs": {
+                                                "name": "lexicalWord",
+                                                "value": "@{split(items('最終結果フレーズからワードを抽出する'), '/')[0]}"
+                                            },
+                                            "runAfter": {
+                                                "最終結果ワードの配列への設定": [
+                                                    "Failed"
+                                                ]
+                                            },
+                                            "type": "SetVariable"
+                                        },
+                                        "最終結果ワードの配列への設定": {
+                                            "inputs": {
+                                                "name": "lexicalWord",
+                                                "value": "@{split(items('最終結果フレーズからワードを抽出する'), '/')[1]}"
+                                            },
+                                            "runAfter": {},
+                                            "type": "SetVariable"
+                                        },
+                                        "最終結果ワードを_contentsArray_配列変数に追加": {
+                                            "inputs": {
+                                                "name": "contentsArray",
+                                                "value": "@variables('lexicalWord')"
+                                            },
+                                            "runAfter": {
+                                                "前ステップ失敗時の配列への設定": [
+                                                    "Succeeded",
+                                                    "Skipped"
+                                                ]
+                                            },
+                                            "type": "AppendToArrayVariable"
+                                        }
+                                    },
+                                    "foreach": "@variables('lexicalPhraseArray')",
+                                    "runAfter": {
+                                        "nBest_の_lexical_を_lexicalPhraseArray_変数に設定": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "runtimeConfiguration": {
+                                        "concurrency": {
+                                            "repetitions": 1
+                                        }
+                                    },
+                                    "type": "Foreach"
+                                }
+                            },
+                            "foreach": "@items('認識結果リストの抽出')['nBest']",
+                            "runAfter": {},
+                            "runtimeConfiguration": {
+                                "concurrency": {
+                                    "repetitions": 1
+                                }
+                            },
+                            "type": "Foreach"
+                        }
+                    },
+                    "foreach": "@items('各_JSON_の認識結果を抽出')?['segmentResults']",
+                    "runAfter": {},
+                    "runtimeConfiguration": {
+                        "concurrency": {
+                            "repetitions": 1
+                        }
+                    },
+                    "type": "Foreach"
+                }
+            },
+            "foreach": "@body('認識結果_JSON_を_parse_する')?['audioFileResults']",
+            "runAfter": {
+                "一時認識結果を格納するための_lexicalWord_変数を初期化する": [
+                    "Succeeded"
+                ]
+            },
+            "runtimeConfiguration": {
+                "concurrency": {
+                    "repetitions": 1
+                }
             },
             "type": "Foreach"
         },
@@ -487,7 +774,7 @@
         },
         "認識結果_BLOB_の作成": {
             "inputs": {
-                "body": "@body('contentsArray_配列の結合')",
+                "body": "@replace(body('contentsArray_配列の結合'), ';', '')",
                 "host": {
                     "connection": {
                         "name": "@parameters('$connections')['azureblob']['connectionId']"
@@ -496,7 +783,7 @@
                 "method": "post",
                 "path": "/datasets/default/files",
                 "queries": {
-                    "folderPath": "",
+                    "folderPath": "/resultext",
                     "name": "@{concat(variables('audioFileName'), '.txt')}",
                     "queryParametersSingleEncoded": true
                 }
@@ -518,65 +805,48 @@
                 "content": "@json(body('音声認識の結果ファイルを_GET_する'))",
                 "schema": {
                     "properties": {
-                        "AudioFileResults": {
+                        "audioFileResults": {
                             "items": {
                                 "properties": {
-                                    "AudioFileName": {
+                                    "audioFileName": {
                                         "type": "string"
                                     },
-                                    "AudioFileUrl": {},
-                                    "SegmentResults": {
+                                    "segmentResults": {
                                         "items": {
                                             "properties": {
-                                                "ChannelNumber": {},
-                                                "Duration": {
+                                                "duration": {
                                                     "type": "integer"
                                                 },
-                                                "NBest": {
+                                                "nBest": {
                                                     "items": {
                                                         "properties": {
-                                                            "Confidence": {
+                                                            "confidence": {
                                                                 "type": "number"
                                                             },
-                                                            "Display": {
+                                                            "lexical": {
                                                                 "type": "string"
-                                                            },
-                                                            "ITN": {
-                                                                "type": "string"
-                                                            },
-                                                            "Lexical": {
-                                                                "type": "string"
-                                                            },
-                                                            "MaskedITN": {
-                                                                "type": "string"
-                                                            },
-                                                            "Words": {}
+                                                            }
                                                         },
                                                         "required": [
-                                                            "Confidence",
-                                                            "Lexical",
-                                                            "ITN",
-                                                            "MaskedITN",
-                                                            "Display",
-                                                            "Words"
+                                                            "confidence",
+                                                            "lexical"
                                                         ],
                                                         "type": "object"
                                                     },
                                                     "type": "array"
                                                 },
-                                                "Offset": {
+                                                "offset": {
                                                     "type": "integer"
                                                 },
-                                                "RecognitionStatus": {
+                                                "recognitionStatus": {
                                                     "type": "string"
                                                 }
                                             },
                                             "required": [
-                                                "RecognitionStatus",
-                                                "ChannelNumber",
-                                                "Offset",
-                                                "Duration",
-                                                "NBest"
+                                                "recognitionStatus",
+                                                "offset",
+                                                "duration",
+                                                "nBest"
                                             ],
                                             "type": "object"
                                         },
@@ -584,9 +854,8 @@
                                     }
                                 },
                                 "required": [
-                                    "AudioFileName",
-                                    "AudioFileUrl",
-                                    "SegmentResults"
+                                    "audioFileName",
+                                    "segmentResults"
                                 ],
                                 "type": "object"
                             },
@@ -650,10 +919,107 @@
                                 "models": {
                                     "items": {
                                         "properties": {
+                                            "baseModel": {
+                                                "properties": {
+                                                    "createdDateTime": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    },
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "lastActionDateTime": {
+                                                        "type": "string"
+                                                    },
+                                                    "locale": {
+                                                        "type": "string"
+                                                    },
+                                                    "modelKind": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "properties": {
+                                                        "properties": {
+                                                            "Purpose": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "status": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
                                             "createdDateTime": {
                                                 "type": "string"
                                             },
                                             "datasets": {
+                                                "items": {
+                                                    "properties": {
+                                                        "createdDateTime": {
+                                                            "type": "string"
+                                                        },
+                                                        "dataImportKind": {
+                                                            "type": "string"
+                                                        },
+                                                        "description": {
+                                                            "type": "string"
+                                                        },
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "lastActionDateTime": {
+                                                            "type": "string"
+                                                        },
+                                                        "locale": {
+                                                            "type": "string"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "properties": {
+                                                            "properties": {
+                                                                "AcceptedLines": {
+                                                                    "type": "string"
+                                                                },
+                                                                "LanguageDataUrl": {
+                                                                    "type": "string"
+                                                                },
+                                                                "PortalAPIVersion": {
+                                                                    "type": "string"
+                                                                },
+                                                                "RejectedLines": {
+                                                                    "type": "string"
+                                                                },
+                                                                "ReportUri": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "status": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "dataImportKind",
+                                                        "id",
+                                                        "createdDateTime",
+                                                        "lastActionDateTime",
+                                                        "status",
+                                                        "locale",
+                                                        "name",
+                                                        "description",
+                                                        "properties"
+                                                    ],
+                                                    "type": "object"
+                                                },
                                                 "type": "array"
                                             },
                                             "description": {
@@ -676,13 +1042,7 @@
                                             },
                                             "properties": {
                                                 "properties": {
-                                                    "ModelClass": {
-                                                        "type": "string"
-                                                    },
                                                     "Purpose": {
-                                                        "type": "string"
-                                                    },
-                                                    "VadKind": {
                                                         "type": "string"
                                                     }
                                                 },
@@ -701,8 +1061,7 @@
                                             "status",
                                             "locale",
                                             "name",
-                                            "description",
-                                            "properties"
+                                            "description"
                                         ],
                                         "type": "object"
                                     },
@@ -713,6 +1072,9 @@
                                 },
                                 "properties": {
                                     "properties": {
+                                        "AddWordLevelTimestamps": {
+                                            "type": "string"
+                                        },
                                         "Duration": {
                                             "type": "string"
                                         },
@@ -765,6 +1127,7 @@
                         "method": "GET",
                         "uri": "https://japaneast.cris.ai/api/speechtotext/v2.0/transcriptions/@{variables('transcriptID')}"
                     },
+                    "operationOptions": "DisableAsyncPattern",
                     "runAfter": {
                         "30秒待機": [
                             "Succeeded"
@@ -840,7 +1203,10 @@
             },
             "runAfter": {
                 "認識結果_BLOB_の作成": [
-                    "Succeeded"
+                    "Succeeded",
+                    "Failed",
+                    "Skipped",
+                    "TimedOut"
                 ]
             },
             "type": "Http"

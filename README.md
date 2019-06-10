@@ -51,8 +51,12 @@ Blob と OneDrive for Business の二つの違いは、
 - [Azure Storage BLOB Event Hub Trigger 版](usageBlobEH.md)
 - Blob Trigger を利用する場合には、上記 Event Hub Trigger 版手順の途中より分岐してください
 
+## Update
+- 途中失敗時の認識タスクIDの削除をできるようにしました（カスタムのjsonのみ対応。その他は今後変更予定）
+- カスタムモデルに対応しました
+- 認識確認時間の並列実行制御を有効にし、確認時間を短縮しました（カスタムのjsonのみ対応。その他は今後変更予定）
+
 ## TODO
-- 途中失敗時の認識タスクIDの削除（どこで？）
 - 開始時間のコントロールができないとしても、Estimate はできないのか？？
 
 ## Notice
