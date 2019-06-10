@@ -444,7 +444,10 @@
                 },
                 "runAfter": {
                     "音声認識タスクリストから該当するタスク_ID_を削除": [
-                        "Succeeded"
+                        "Succeeded",
+                        "Failed",
+                        "Skipped",
+                        "TimedOut"
                     ]
                 },
                 "type": "ApiConnection"
@@ -856,7 +859,10 @@
                 },
                 "runAfter": {
                     "Result_フォルダに結果の書き出し": [
-                        "Succeeded"
+                        "Succeeded",
+                        "Failed",
+                        "Skipped",
+                        "TimedOut"
                     ]
                 },
                 "type": "Http"

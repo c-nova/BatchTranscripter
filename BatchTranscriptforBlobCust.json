@@ -761,7 +761,7 @@
                     {
                         "name": "contentsArray",
                         "type": "Array",
-                        "value": "@array(concat('Cognitive Services Speech Service を利用して', variables('audioFileName'), 'の音声を文字に変換します。'))"
+                        "value": "@array(concat('Cognitive Services Speech Service を利用して', variables('audioFileName'), 'の音声を文字に変換します。', uriComponentToString('%0A')))"
                     }
                 ]
             },

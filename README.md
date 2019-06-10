@@ -1,6 +1,7 @@
 # Batch Transcripter
 
 ## 概要
+
 Batch Transcripter は**音声ファイルから「なるべく簡単に」文字を起こす**仕組みです。
 通常 Cognitive Services の Speech Service をはじめとする音声認識システムは API のみの提供であり、例えば簡単に議事録の音声を文字化するとしてもアプリケーションを作成する必要があり、一般的なオフィス用途で使用しようとしても非常にハードルが高いものでした。
 
@@ -27,6 +28,7 @@ Batch Transcripter は**音声ファイルから「なるべく簡単に」文�
 [Batch 文字起こしを使用する理由](https://docs.microsoft.com/ja-jp/azure/cognitive-services/speech-service/batch-transcription)
 
 ## 仕組み
+
 Logic Apps にコードを展開後にフローを見ると分かりやすいのですが、
 
 1. ストレージに新規のファイルが投入されるとトリガー発動
@@ -49,19 +51,25 @@ Blob と OneDrive for Business の二つの違いは、
 
 - [OneDrive for Business 版](usageODB.md)
 - [Azure Storage BLOB Event Hub Trigger 版](usageBlobEH.md)
-- Blob Trigger を利用する場合には、上記 Event Hub Trigger 版手順の途中より分岐してください
+- Blob Trigger を利用する場合には、上記 Event Hub Trigger 版手順の 12 項より分岐してください
+- Blob Trigger でカスタムモデルを利用する場合は、上記手順の 6 項、9 項で対応してください
 
 ## Update
-- 途中失敗時の認識タスクIDの削除をできるようにしました（カスタムのjsonのみ対応。その他は今後変更予定）
-- カスタムモデルに対応しました
-- 認識確認時間の並列実行制御を有効にし、確認時間を短縮しました（カスタムのjsonのみ対応。その他は今後変更予定）
+
+- 途中失敗時の認識タスクIDの削除をできるようにしました
+- BLOB Trigger のみカスタムモデルに対応しました
+- 認識確認時間の並列実行制御を有効にし、確認時間を短縮しました
 
 ## TODO
+
+- BLOB Trigger 以外の手順でのカスタムモデル対応
 - 開始時間のコントロールができないとしても、Estimate はできないのか？？
 
 ## Notice
+
 本プログラムは無保証です。ご利用者の責任の範囲でご利用ください。本プログラムを使用したいかなる損害につきましても補償致しません。
 ライセンスはMITライセンスに準拠します。
 
 ## Acknowledgements
+
 本プログラムを作成するにあたって Abhishek 氏の記事[「Logic Apps — Large Audio -Speech to Text Batch Transcription」](https://medium.com/@abhishekcskumar/logic-apps-large-audio-speech-to-text-batch-transcription-d71e93bbaeec)が非常に参考になりました。もしご興味あればご一読ください。
