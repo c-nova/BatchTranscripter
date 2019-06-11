@@ -1,6 +1,6 @@
 ## 使い方（Azure Storage BLOB Blob Trigger 版）
 
-1. 途中の手順までは Azure Storage BLOB Blob Trigger 版のとおりに進めます。まだ未作業の場合には[こちら](usageBlobEH.md)の手順を進めてください。
+1. 途中の手順までは Azure Storage BLOB Event Hub Trigger 版のとおりに進めます。まだ未作業の場合には[こちら](usageBlobEH.md)の手順を進めてください。
    
 2. トリガーの検索ウィンドウで「blob」と入力し、検索結果から「BLOB が追加または変更されたとき（プロパティのみ） (プレビュー)」を選択します。
    <br><img src="img/inst201.png" width=480>
