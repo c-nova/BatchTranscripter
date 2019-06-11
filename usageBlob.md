@@ -15,7 +15,6 @@
    <br><img src="img/inst204.png" width=480>
 
 6.  開いたコードの `definition` のサブアイテム `$schema`から `parameters` まで(triggersの直前まで)の内容を選択し、[BatchTranscriptforBlob.json](BatchTranscriptforBlob.json) のファイルの内容で全て上書きコピーします（triggers は消さないように注意してください）。カスタムモデルを使用した認識を行う場合には [BatchTranscriptforBlobCust.json](BatchTranscriptforBlobCust.json) を使用します。
-
    <br><img src="img/inst205.png" width=480>
 
 7.  変更後、「保存」をクリックします。その後「デザイナー」ボタンをクリックし、デザイナー画面を開きます。
@@ -29,10 +28,12 @@
     <br><img src="img/inst208.png" width=480>
 
     カスタムモデルのIDは、現行 Custom Speech ポータルの場合は以下の画面で四角で囲まれたIDをご利用ください。
+
     [cris.ai](https://japaneast.cris.ai/Home/CustomSpeech)
     <br><img src="img/inst210.png" width=480>
 
     新ポータルをご利用の場合には、以下の画面で四角で囲まれたIDをご利用ください。
+    
     [speech.microsoft.com](https://speech.microsoft.com/)
     <br><img src="img/inst211.png" width=480>
 
