@@ -28,6 +28,14 @@
 カスタムモデルを使用する場合には models の箇所を作成した言語モデルのIDに置き換えます。
     <br><img src="img/inst208.png" width=480>
 
+    カスタムモデルのIDは、現行 Custom Speech ポータルの場合は以下の画面で四角で囲まれたIDをご利用ください。
+    [cris.ai](https://japaneast.cris.ai/Home/CustomSpeech)
+    <br><img src="img/inst210.png" width=480>
+
+    新ポータルをご利用の場合には、以下の画面で四角で囲まれたIDをご利用ください。
+    [speech.microsoft.com](https://speech.microsoft.com/)
+    <br><img src="img/inst211.png" width=480>
+
 10. 結果のテキストファイルを配置する BLOB のフォルダを指定します。
     <br><img src="img/inst116.png" width=480>
 
